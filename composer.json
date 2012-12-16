@@ -1,0 +1,39 @@
+{
+    "name": "fr3d/xmldsig",
+    "description": "Tool for manage XML Signatures (http://www.w3.org/TR/xmldsig-core/)",
+    "authors": [
+        {
+            "name": "Maks3w",
+            "email": "github.maks3w@virtualplanets.net"
+        }
+    ],
+    "require": {
+        "cdatazone/xmlseclibs": "*@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">= 3.7"
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "cdatazone/xmlseclibs",
+                "version": "dev-master",
+                "source": {
+                    "type": "svn",
+                    "url": "http://xmlseclibs.googlecode.com/svn/",
+                    "reference": "trunk/"
+                },
+                "autoload": {
+                    "classmap": ["xmlseclibs.php"]
+                }
+            }
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "FR3D\\XmlDSig\\": ["src"],
+            "FR3D\\XmlDSigTest\\": ["test"]
+        }
+    }
+}
