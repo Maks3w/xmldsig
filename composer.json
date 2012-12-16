@@ -1,13 +1,21 @@
 {
     "name": "fr3d/xmldsig",
-    "description": "Tool for manage XML Signatures (http://www.w3.org/TR/xmldsig-core/)",
+    "description": "Tool for easy management of XML Signatures (http://www.w3.org/TR/xmldsig-core/)",
     "license": "BSD-2-Clause",
+    "keywords": [
+        "xml",
+        "xmldsig",
+        "signature",
+        "security",
+        "soap"
+    ],
     "authors": [
         {
             "name": "Maks3w",
             "email": "github.maks3w@virtualplanets.net"
         }
     ],
+    "homepage": "https://github.com/Maks3w/",
     "require": {
         "cdatazone/xmlseclibs": "*"
     },
