@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "cdatazone/xmlseclibs": "*@dev"
+        "cdatazone/xmlseclibs": "*"
     },
     "require-dev": {
         "phpunit/phpunit": ">= 3.7"
