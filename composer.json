@@ -1,6 +1,7 @@
 {
     "name": "fr3d/xmldsig",
     "description": "Tool for manage XML Signatures (http://www.w3.org/TR/xmldsig-core/)",
+    "license": "BSD-2-Clause",
     "authors": [
         {
             "name": "Maks3w",
