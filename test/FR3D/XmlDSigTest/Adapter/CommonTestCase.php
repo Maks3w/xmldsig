@@ -3,6 +3,7 @@
 namespace FR3D\XmlDSigTest\Adapter;
 
 use DOMDocument;
+use DOMXPath;
 use FR3D\XmlDSig\Adapter\AdapterInterface;
 
 /**
@@ -58,5 +59,29 @@ class CommonTestCase extends \PHPUnit_Framework_TestCase
         $data->load(__DIR__ . '/_files/basic-doc-signed.xml');
 
         $this->assertTrue($this->adapter->verify($data));
+    }
+
+    public function testManipulatedData()
+    {
+        $data = new DOMDocument();
+        $data->load(__DIR__ . '/_files/basic-doc-signed.xml');
+
+        $xpath = new DOMXPath($data);
+        $xpath->registerNamespace('s', 'urn:envelope');
+        $xpath->query('//s:Value')->item(0)->nodeValue = 'wrong test';
+
+        $this->assertFalse($this->adapter->verify($data));
+    }
+
+    public function testManipulatedSignature()
+    {
+        $data = new DOMDocument();
+        $data->load(__DIR__ . '/_files/basic-doc-signed.xml');
+
+        $xpath = new DOMXPath($data);
+        $xpath->registerNamespace('s', 'urn:envelope');
+        $xpath->query('//s:Value')->item(0)->nodeValue = 'wrong test';
+
+        $this->assertFalse($this->adapter->verify($data));
     }
 }

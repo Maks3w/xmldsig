@@ -177,7 +177,18 @@ class XmlseclibsAdapter implements AdapterInterface
             $objKey->loadKey($this->getPublicKey());
         }
 
-        //$objXMLSecDSig->validateReference();
-        return (1 === $objXMLSecDSig->verify($objKey));
+        // Check signature
+        if (1 !== $objXMLSecDSig->verify($objKey)) {
+            return false;
+        }
+
+        // Check references (data)
+        try {
+            $objXMLSecDSig->validateReference();
+        } catch(\Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 }
