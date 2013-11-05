@@ -156,15 +156,15 @@ class XmlseclibsAdapter implements AdapterInterface
         if (!$this->getPublicKey()) {
             // try to get the public key from the certificate
             $objKey = $objXMLSecDSig->locateKey();
-            if ($objKey) {
-                XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
-                $this->publicKey    = $objKey->getX509Certificate();
-                $this->keyAlgorithm = $objKey->getAlgorith();
-            } else {
+            if (!$objKey) {
                 throw new RuntimeException(
                     'There is no set either private key or public key for signature verification.'
                 );
             }
+
+            XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
+            $this->publicKey    = $objKey->getX509Certificate();
+            $this->keyAlgorithm = $objKey->getAlgorith();
         }
 
         if (!$objKey) {
