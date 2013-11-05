@@ -26,6 +26,34 @@ class CommonTestCase extends \PHPUnit_Framework_TestCase
      */
     protected $publicKey = '../_files/pubkey.pem';
 
+    public function testGetPublicKeyFromSetter()
+    {
+        $publicKey = $this->getPublicKey();
+        $this->assertNotEquals($publicKey, $this->adapter->getPublicKey());
+
+        $this->adapter->setPublicKey($publicKey);
+        $this->assertEquals($publicKey, $this->adapter->getPublicKey());
+    }
+
+    public function testGetPublicKeyFromPrivateKey()
+    {
+        $publicKey = $this->getPublicKey();
+        $this->assertNotEquals($publicKey, $this->adapter->getPublicKey());
+
+        $this->adapter->setPrivateKey($this->getPrivateKey());
+        $this->assertEquals($publicKey, $this->adapter->getPublicKey());
+    }
+
+    public function testGetPublicKeyFromNode()
+    {
+        $publicKey = $this->getPublicKey();
+        $this->assertNotEquals($publicKey, $this->adapter->getPublicKey());
+
+        $data = new DOMDocument();
+        $data->load(__DIR__ . '/_files/basic-doc-signed.xml');
+        $this->assertEquals($publicKey, $this->adapter->getPublicKey($data));
+    }
+
     public function testSignWithoutPrivateKeys()
     {
         $this->setExpectedException(
@@ -41,8 +69,8 @@ class CommonTestCase extends \PHPUnit_Framework_TestCase
         $data->load(__DIR__ . '/_files/basic-doc.xml');
 
         $this->adapter
-            ->setPrivateKey(file_get_contents(__DIR__ . '/' . $this->privateKey))
-            ->setPublicKey(file_get_contents(__DIR__ . '/' . $this->publicKey))
+            ->setPrivateKey($this->getPrivateKey())
+            ->setPublicKey($this->getPublicKey())
             ->addTransform(AdapterInterface::ENVELOPED)
             ->setCanonicalMethod('http://www.w3.org/2001/10/xml-exc-c14n#')
             ->sign($data);
@@ -83,5 +111,15 @@ class CommonTestCase extends \PHPUnit_Framework_TestCase
         $xpath->query('//s:Value')->item(0)->nodeValue = 'wrong test';
 
         $this->assertFalse($this->adapter->verify($data));
+    }
+
+    protected function getPrivateKey()
+    {
+        return file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $this->privateKey);
+    }
+
+    protected function getPublicKey()
+    {
+        return file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $this->publicKey);
     }
 }

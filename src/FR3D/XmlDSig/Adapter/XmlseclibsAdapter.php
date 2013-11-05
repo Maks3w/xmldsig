@@ -3,6 +3,7 @@
 namespace FR3D\XmlDSig\Adapter;
 
 use DOMDocument;
+use DOMNode;
 use XMLSecEnc;
 use RuntimeException;
 use XMLSecurityKey;
@@ -77,14 +78,14 @@ class XmlseclibsAdapter implements AdapterInterface
         return $this;
     }
 
-    public function getPublicKey()
+    public function getPublicKey(DOMNode $dom = null)
     {
+        if ($dom) {
+            $this->setPublicKeyFromNode($dom);
+        }
+
         if (!$this->publicKey && $this->privateKey) {
-            // Extract public key from private key
-            openssl_pkey_export(
-                openssl_pkey_get_public($this->privateKey),
-                $this->publicKey
-            );
+            $this->setPublicKeyFromPrivateKey($this->privateKey);
         }
 
         return $this->publicKey;
@@ -190,5 +191,51 @@ class XmlseclibsAdapter implements AdapterInterface
         }
 
         return true;
+    }
+
+    /**
+     * Try to extract the public key from DOM node
+     *
+     * Sets publicKey and keyAlgorithm properties if success.
+     *
+     * @see publicKey
+     * @see keyAlgorithm
+     * @param DOMNode $dom
+     * @return bool `true` If public key was extracted or `false` if cannot be possible
+     */
+    protected function setPublicKeyFromNode(DOMNode $dom)
+    {
+        // try to get the public key from the certificate
+        $objXMLSecDSig = new XMLSecurityDSig();
+        $objDSig       = $objXMLSecDSig->locateSignature($dom);
+        if (!$objDSig) {
+            return false;
+        }
+
+        $objKey = $objXMLSecDSig->locateKey();
+        if (!$objKey) {
+            return false;
+        }
+
+        XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
+        $this->publicKey    = $objKey->getX509Certificate();
+        $this->keyAlgorithm = $objKey->getAlgorith();
+
+        return true;
+    }
+
+    /**
+     * Try to extract the public key from private key
+     *
+     * @see publicKey
+     * @param string $privateKey
+     * @return bool `true` If public key was extracted or `false` if cannot be possible
+     */
+    protected function setPublicKeyFromPrivateKey($privateKey)
+    {
+        return openssl_pkey_export(
+            openssl_pkey_get_public($privateKey),
+            $this->publicKey
+        );
     }
 }

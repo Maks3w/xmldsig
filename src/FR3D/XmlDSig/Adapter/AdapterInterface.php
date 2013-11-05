@@ -3,6 +3,7 @@
 namespace FR3D\XmlDSig\Adapter;
 
 use DOMDocument;
+use DOMNode;
 use RuntimeException;
 
 /**
@@ -56,9 +57,18 @@ interface AdapterInterface
     public function setPublicKey($publicKey);
 
     /**
+     * Returns the public key from various sources
+     *
+     * Try to get the public key from the following sources (index means priority):
+     *
+     *  1) From $dom param of this method
+     *  2) From a previous publickey set by setPublicKey
+     *  3) From private key set by setPrivateKey
+     *
+     * @param null|DOMNode $dom DOM node where to search a publicKey
      * @return string|null Public key in PEM format
      */
-    public function getPublicKey();
+    public function getPublicKey(DOMNode $dom = null);
 
     /**
      * Public/Private key signature algorithm
