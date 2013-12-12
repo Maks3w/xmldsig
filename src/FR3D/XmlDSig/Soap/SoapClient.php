@@ -93,9 +93,14 @@ class SoapClient extends \SoapClient
 
         $this->xmlDSigAdapter->sign($newData);
 
+        /* DOM mode for add the signed node
         $firstElement->appendChild($dom->importNode($newData->firstChild->lastChild, true));
-
         $request = $dom->saveXML();
+        */
+
+        /* Compatibility mode for add signed node without lost namespaces declaration */
+        $newBody = '<SOAP-ENV:Body>' . $newData->C14N() . '</SOAP-ENV:Body>';
+        $request = preg_replace('#<SOAP-ENV:Body>.*</SOAP-ENV:Body>#', $newBody, $request);
 
         if ($this->debugMode) {
             $this->lastRequest = $request;
