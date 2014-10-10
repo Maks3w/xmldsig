@@ -17,7 +17,7 @@
     ],
     "homepage": "https://github.com/Maks3w/",
     "require": {
-        "cdatazone/xmlseclibs": "*"
+        "fr3d/xmlseclibs": "v1.3.0"
     },
     "require-dev": {
         "phpunit/phpunit": ">= 3.7"
@@ -26,7 +26,7 @@
         {
             "type": "package",
             "package": {
-                "name": "cdatazone/xmlseclibs",
+                "name": "fr3d/xmlseclibs",
                 "version": "dev-master",
                 "source": {
                     "type": "svn",
