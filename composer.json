@@ -1,0 +1,15 @@
+{
+    "name": "fragote/xmldsig",
+    "description": "This is an interface to use xmlseclibs easily",
+    "require": {
+        "xmlseclibs/xmlseclibs": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Francis Gonzales",
+            "email": "fgonzalestello91@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
