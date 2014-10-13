@@ -11,5 +11,11 @@
             "email": "fgonzalestello91@gmail.com"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "FR3D\\XmlDSig\\": ["src"],
+            "FR3D\\XmlDSigTest\\": ["test"]
+        }
+    }
 }
