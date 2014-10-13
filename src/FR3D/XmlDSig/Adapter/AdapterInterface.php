@@ -32,7 +32,8 @@ interface AdapterInterface
     const RSA_SHA1 = 'http://www.w3.org/2000/09/xmldsig#rsa-sha1';
 
     /* Canonicalization */
-    const XML_C14N = 'http://www.w3.org/TR/2001/REC-xml-c14n-20010315';
+    const REC_XML_C14N = 'http://www.w3.org/TR/2001/REC-xml-c14n-20010315';
+    const XML_C14N = 'http://www.w3.org/2001/10/xml-exc-c14n#';
 
     /* Transform */
     const ENVELOPED = 'http://www.w3.org/2000/09/xmldsig#enveloped-signature';
