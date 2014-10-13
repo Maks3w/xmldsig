@@ -61,7 +61,7 @@ class XmlseclibsAdapter implements AdapterInterface
      * @see AdapterInterface::ENVELOPED
      */
     protected $transforms = array();
-
+    
 
     public function setPrivateKey($privateKey, $algorithmType = self::RSA_SHA1)
     {
@@ -117,7 +117,7 @@ class XmlseclibsAdapter implements AdapterInterface
         return $this;
     }
 
-    public function sign(DOMDocument $data)
+    public function sign(DOMDocument $data, DOMNode $appendTo = null)
     {
         if (null === $this->privateKey) {
             throw new RuntimeException(
@@ -133,10 +133,14 @@ class XmlseclibsAdapter implements AdapterInterface
         );
         $objKey->loadKey($this->privateKey);
 
+        if (empty($appendTo)) {
+            $appendTo = $data->documentElement;
+        }
+        
         $objXMLSecDSig = new XMLSecurityDSig();
-        $objXMLSecDSig->setCanonicalMethod($this->canonicalMethod);
         $objXMLSecDSig->addReference($data, $this->digestAlgorithm, $this->transforms, array('force_uri' => true));
-        $objXMLSecDSig->sign($objKey, $data->documentElement);
+        $objXMLSecDSig->setCanonicalMethod($this->canonicalMethod);
+        $objXMLSecDSig->sign($objKey, $appendTo);
 
         /* Add associated public key */
         if ($this->getPublicKey()) {

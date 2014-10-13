@@ -1,48 +1,20 @@
 {
-    "name": "fr3d/xmldsig",
-    "description": "Tool for easy management of XML Signatures (http://www.w3.org/TR/xmldsig-core/)",
-    "license": "BSD-2-Clause",
-    "keywords": [
-        "xml",
-        "xmldsig",
-        "signature",
-        "security",
-        "soap"
-    ],
+    "name": "fragote/xmldsig",
+    "description": "This is an interface to use xmlseclibs easily",
+    "require": {
+        "xmlseclibs/xmlseclibs": "dev-master"
+    },
+    "license": "MIT",
     "authors": [
         {
-            "name": "Maks3w",
-            "email": "github.maks3w@virtualplanets.net"
+            "name": "Francis Gonzales",
+            "email": "fgonzalestello91@gmail.com"
         }
     ],
-    "homepage": "https://github.com/Maks3w/",
-    "require": {
-        "cdatazone/xmlseclibs": "*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": ">= 3.7"
-    },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "cdatazone/xmlseclibs",
-                "version": "dev-master",
-                "source": {
-                    "type": "svn",
-                    "url": "http://xmlseclibs.googlecode.com/svn/",
-                    "reference": "trunk/"
-                },
-                "autoload": {
-                    "classmap": ["xmlseclibs.php"]
-                }
-            }
-        }
-    ],
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
-            "FR3D\\XmlDSig\\": ["src"],
-            "FR3D\\XmlDSigTest\\": ["test"]
+            "FR3D\\XmlDSig\\": ["src"]
         }
     }
 }
