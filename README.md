@@ -2,6 +2,8 @@
 
 [![Build Status](https://secure.travis-ci.org/eramo-software/xmldsig.png?branch=master)](http://travis-ci.org/Maks3w/xmldsig)
 
+Original repository: https://github.com/Maks3w/xmldsig
+
 This repository offers an easy interface to manipulate [XML Digital Signatures](http://www.w3.org/TR/xmldsig-core/)
 based in PHP Language.
 
@@ -10,6 +12,10 @@ based in PHP Language.
   - Sign XML data (`DOMDocument`)
 
   - Sign Soap Requests
+
+## Usage and Examples
+
+View usage examples in https://github.com/eramo-software/xmldsig/examples/
 
 ## Documentation
 
