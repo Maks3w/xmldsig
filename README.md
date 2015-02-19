@@ -15,7 +15,7 @@ based in PHP Language.
 
 ## Usage and Examples
 
-View usage examples in https://github.com/eramo-software/xmldsig/examples/
+View usage examples in https://github.com/eramo-software/xmldsig/tree/master/examples
 
 ## Documentation
 
