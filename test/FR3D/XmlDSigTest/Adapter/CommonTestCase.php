@@ -178,32 +178,32 @@ class CommonTestCase extends \PHPUnit_Framework_TestCase
 
         $this->adapter->setCertificate( __DIR__ . '/../_files/cert.pem' );
 
-        $this->assertEquals( $this->adapter->getPublicKey(), file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ) );
-        $this->assertEquals( $this->adapter->getPrivateKey(), file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ) );
+        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ), $this->adapter->getPublicKey() );
+        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ), $this->adapter->getPrivateKey() );
     }
 
     public function testSetCertificatePemFromString(){
 
         $this->adapter->setCertificate( file_get_contents( __DIR__ . '/../_files/cert.pem' ) );
 
-        $this->assertEquals( $this->adapter->getPublicKey(), file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ) );
-        $this->assertEquals( $this->adapter->getPrivateKey(), file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ) );
+        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ), $this->adapter->getPublicKey() );
+        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ), $this->adapter->getPrivateKey() );
     }
 
     public function testSetCertificatePfx(){
 
         $this->adapter->setCertificate( __DIR__ . '/../_files/cert.pfx', "1234" );
 
-        $this->assertEquals( $this->adapter->getPublicKey(), file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ) );
-        $this->assertEquals( $this->adapter->getPrivateKey(), file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ) );
+        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ), $this->adapter->getPublicKey() );
+        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ), $this->adapter->getPrivateKey() );
     }
 
     public function testSetCertificatePfxFromString(){
 
         $this->adapter->setCertificate( file_get_contents( __DIR__ . '/../_files/cert.pfx' ), "1234" );
 
-        $this->assertEquals( $this->adapter->getPublicKey(), file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ) );
-        $this->assertEquals( $this->adapter->getPrivateKey(), file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ) );
+        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ), $this->adapter->getPublicKey() );
+        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ), $this->adapter->getPrivateKey() );
     }
 
     public function testSetCertificatePfxNoPassoword(){

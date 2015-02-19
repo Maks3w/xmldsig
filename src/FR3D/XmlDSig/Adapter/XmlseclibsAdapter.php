@@ -331,7 +331,7 @@ class XmlseclibsAdapter implements AdapterInterface
             );
         }
 
-        openssl_pkey_export($privateKey, $this->privateKey);
+        openssl_pkey_export($privateKey, $this->privateKey, null, array('private_key_type' => OPENSSL_KEYTYPE_RSA));
         $this->publicKey = $publicKey;
         
         if( !$this->privateKey || !$this->publicKey ){
