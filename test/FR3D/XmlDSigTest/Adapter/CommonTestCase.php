@@ -174,36 +174,47 @@ class CommonTestCase extends \PHPUnit_Framework_TestCase
         $this->assertTrue( $this->adapter->verify( $data ) );
     }
 
+    protected function _checkPublicKey(){
+        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ), $this->adapter->getPublicKey() );
+    }
+
+    protected function _checkPrivateKey(){
+        $keyDetailsActual = openssl_pkey_get_details( openssl_pkey_get_private( $this->adapter->getPrivateKey() ) );
+        $keyDetailsExpected = openssl_pkey_get_details( openssl_pkey_get_private(file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' )) );
+
+        $this->assertEquals( $keyDetailsActual['rsa'] , $keyDetailsExpected['rsa'] );
+    }
+
     public function testSetCertificatePem(){
 
         $this->adapter->setCertificate( __DIR__ . '/../_files/cert.pem' );
 
-        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ), $this->adapter->getPublicKey() );
-        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ), $this->adapter->getPrivateKey() );
+        $this->_checkPublicKey();
+        $this->_checkPrivateKey();
     }
 
     public function testSetCertificatePemFromString(){
 
         $this->adapter->setCertificate( file_get_contents( __DIR__ . '/../_files/cert.pem' ) );
 
-        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ), $this->adapter->getPublicKey() );
-        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ), $this->adapter->getPrivateKey() );
+        $this->_checkPublicKey();
+        $this->_checkPrivateKey();
     }
 
     public function testSetCertificatePfx(){
 
         $this->adapter->setCertificate( __DIR__ . '/../_files/cert.pfx', "1234" );
 
-        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ), $this->adapter->getPublicKey() );
-        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ), $this->adapter->getPrivateKey() );
+        $this->_checkPublicKey();
+        $this->_checkPrivateKey();
     }
 
     public function testSetCertificatePfxFromString(){
 
         $this->adapter->setCertificate( file_get_contents( __DIR__ . '/../_files/cert.pfx' ), "1234" );
 
-        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-pubkey.pem' ), $this->adapter->getPublicKey() );
-        $this->assertEquals( file_get_contents( __DIR__ . '/../_files/cert-privkey.pem' ), $this->adapter->getPrivateKey() );
+        $this->_checkPublicKey();
+        $this->_checkPrivateKey();
     }
 
     public function testSetCertificatePfxNoPassoword(){
