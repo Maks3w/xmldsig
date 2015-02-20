@@ -1,6 +1,6 @@
 # FR3D XmlDSig
 
-[![Build Status](https://secure.travis-ci.org/eramo-software/xmldsig.png?branch=master)](http://travis-ci.org/Maks3w/xmldsig)
+[![Build Status](https://secure.travis-ci.org/eramo-software/xmldsig.png?branch=master)](http://travis-ci.org/eramo-software/xmldsig)
 
 Original repository: https://github.com/Maks3w/xmldsig
 
