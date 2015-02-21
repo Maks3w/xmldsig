@@ -2,7 +2,6 @@
 
 namespace FR3D\XmlDSig\Adapter;
 
-use DOMDocument;
 use DOMNode;
 use RuntimeException;
 
@@ -38,6 +37,14 @@ interface AdapterInterface
     const ENVELOPED = 'http://www.w3.org/2000/09/xmldsig#enveloped-signature';
 
     /**
+     * Sets a private and public key from a P12 or PEM encoded certificate
+     * 
+     * @param String $filename Path to certificate file
+     * @param String $password Optional password for certificate opening
+     */
+    public function setCertificate($filename, $password = null);
+
+    /**
      * Set the private key for data sign
      *
      * @param string $privateKey    Key in PEM format
@@ -69,6 +76,13 @@ interface AdapterInterface
      * @return string|null Public key in PEM format
      */
     public function getPublicKey(DOMNode $dom = null);
+
+    /**
+     * Returns the private key
+     *
+     * @return string|null Private key in PEM format
+     */
+    public function getPrivateKey();
 
     /**
      * Public/Private key signature algorithm
@@ -107,18 +121,18 @@ interface AdapterInterface
     /**
      * Add the "signature" element to the DOM Document
      *
-     * @param DOMDocument $data Data to sign
+     * @param DOMNode $data Data to sign
      * @return void
      * @throws RuntimeException If is not possible do the signature
      */
-    public function sign(DOMDocument $data);
+    public function sign(DOMNode $data);
 
     /**
      * Validate the signature of the DOM Document
      *
-     * @param DOMDocument $data Data to verify
+     * @param DOMNode $data Data to verify
      * @return boolean TRUE if is correct or FALSE otherwise
      * @throws RuntimeException If is not possible do the verification
      */
-    public function verify(DOMDocument $data);
+    public function verify(DOMNode $data);
 }

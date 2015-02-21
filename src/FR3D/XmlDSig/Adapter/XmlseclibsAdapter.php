@@ -65,6 +65,10 @@ class XmlseclibsAdapter implements AdapterInterface
 
     public function setPrivateKey($privateKey, $algorithmType = self::RSA_SHA1)
     {
+        if( strlen($privateKey) < 1024 && is_file($privateKey) ){
+            $privateKey = file_get_contents($privateKey);
+        }
+
         $this->privateKey   = $privateKey;
         $this->keyAlgorithm = $algorithmType;
 
@@ -73,6 +77,10 @@ class XmlseclibsAdapter implements AdapterInterface
 
     public function setPublicKey($publicKey)
     {
+        if( strlen($publicKey) < 1024 && is_file($publicKey) ){
+            $publicKey = file_get_contents($publicKey);
+        }
+
         $this->publicKey = $publicKey;
 
         return $this;
@@ -89,6 +97,11 @@ class XmlseclibsAdapter implements AdapterInterface
         }
 
         return $this->publicKey;
+    }
+
+    public function getPrivateKey()
+    {
+        return $this->privateKey;
     }
 
     public function getKeyAlgorithm()
@@ -117,12 +130,20 @@ class XmlseclibsAdapter implements AdapterInterface
         return $this;
     }
 
-    public function sign(DOMDocument $data)
+    public function sign(DOMNode $data, $appendToNode = NULL)
     {
         if (null === $this->privateKey) {
             throw new RuntimeException(
-                'Missing private key. Use setPrivateKey to set one.'
+                'Missing private key. Use setPrivateKey or setCertificate to set one.'
             );
+        }
+
+        if( null === $appendToNode ){
+            if( $data instanceof DOMDocument ){
+                $appendToNode = $data->documentElement;
+            } else {
+                $appendToNode = $data->ownerDocument->documentElement;
+            }
         }
 
         $objKey = new XMLSecurityKey(
@@ -135,8 +156,8 @@ class XmlseclibsAdapter implements AdapterInterface
 
         $objXMLSecDSig = new XMLSecurityDSig();
         $objXMLSecDSig->setCanonicalMethod($this->canonicalMethod);
-        $objXMLSecDSig->addReference($data, $this->digestAlgorithm, $this->transforms, array('force_uri' => true));
-        $objXMLSecDSig->sign($objKey, $data->documentElement);
+        $objXMLSecDSig->addReference($data, $this->digestAlgorithm, $this->transforms, array('force_uri' => true, 'overwrite' => false));
+        $objXMLSecDSig->sign($objKey, $appendToNode);
 
         /* Add associated public key */
         if ($this->getPublicKey()) {
@@ -144,11 +165,15 @@ class XmlseclibsAdapter implements AdapterInterface
         }
     }
 
-    public function verify(DOMDocument $data)
+    public function verify(DOMNode $data)
     {
+
+        // clones $data to avoid losing the signature node
+        $clonedData = clone $data;
+
         $objKey        = null;
         $objXMLSecDSig = new XMLSecurityDSig();
-        $objDSig       = $objXMLSecDSig->locateSignature($data);
+        $objDSig       = $objXMLSecDSig->locateSignature($clonedData);
         if (!$objDSig) {
             throw new UnexpectedValueException('Signature DOM element not found.');
         }
@@ -238,4 +263,92 @@ class XmlseclibsAdapter implements AdapterInterface
             $this->publicKey
         );
     }
+
+    /**
+     * Sets both private and public key from a P12 (PFX) or PEM encoded certificate
+     * 
+     * @param String $cert Path to certificate file or String
+     * @param String $password Optional password for certificate opening
+     */
+    public function setCertificate($cert, $password = null){
+
+        // if $cert is a file load it
+        if( strlen($cert) < 1024 && is_file($cert) ){
+            $cert = file_get_contents($cert);
+        }
+
+        if(!strlen($cert)){
+            throw new RuntimeException(
+                __METHOD__ . ' - the Certificate is invalid. Please check the file or the string provided.'
+            );
+        }
+
+        // private key resource
+        $privateKey = null;
+        $publicKey = null;
+
+        // tries to load the cert as X509
+        if( stripos($cert, "BEGIN CERTIFICATE") !== false ){
+            
+            $x509 = openssl_x509_parse( $cert );
+
+            if($x509 === false){
+                throw new RuntimeException(
+                    __METHOD__ . ' - the certificate appears to be in X509 format but openssl_x509_parse was unable to load it. Please check the certificate provided.'
+                );
+            }
+
+            $privateKey = openssl_get_privatekey($cert, $password);
+            openssl_x509_export($cert, $publicKey);
+
+        }
+        // tries to load as PFX
+        else {
+            
+            $pfx = array();
+            $pkcs12 = openssl_pkcs12_read($cert, $pfx, $password);
+            
+            if($pkcs12 !== true){
+                throw new RuntimeException(
+                    __METHOD__ . ' - Unable to load certificate as PKCS12 file. Please check the certificate and password provided.'
+                );
+            }
+
+            $privateKey = $pfx['pkey'];
+            $publicKey = $pfx['cert'];
+
+        }
+
+        if($privateKey === false){
+            throw new RuntimeException(
+                __METHOD__ . ' - unable to load private key from certificate.'
+            );
+        }
+
+        if($publicKey === false){
+            throw new RuntimeException(
+                __METHOD__ . ' - unable to load public key from certificate.'
+            );
+        }
+
+        openssl_pkey_export($privateKey, $this->privateKey, null, array('private_key_type' => OPENSSL_KEYTYPE_RSA));
+        $this->publicKey = $publicKey;
+        
+        if( !$this->privateKey || !$this->publicKey ){
+            throw new RuntimeException(
+                __METHOD__ . ' - unable to set private/public keys from cert.'
+            );
+        }
+        
+        return $this;
+    }
+
 }
+
+
+
+
+
+
+
+
