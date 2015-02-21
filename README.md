@@ -9,7 +9,7 @@ based in PHP Language.
 
   - Sign XML data (`DOMDocument`)
 
-  - Sign Soap Requests
+  - Sign SOAP Requests
 
 ## Documentation
 
