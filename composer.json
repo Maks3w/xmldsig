@@ -17,9 +17,10 @@
     ],
     "homepage": "https://github.com/Maks3w/",
     "require": {
-        "cdatazone/xmlseclibs": "dev-master"
+        "cdatazone/xmlseclibs": "*"
     },
     "require-dev": {
+        "cdatazone/xmlseclibs": "dev-master",
         "fabpot/php-cs-fixer": "1.*",
         "phpunit/phpunit": ">= 3.7"
     },
