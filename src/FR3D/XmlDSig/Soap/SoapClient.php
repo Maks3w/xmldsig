@@ -6,7 +6,7 @@ use DOMDocument;
 use FR3D\XmlDSig\Adapter\AdapterInterface;
 
 /**
- * SOAP client with XmlDSig support
+ * SOAP client with XmlDSig support.
  *
  * If not XmlDSig adapter is set then works like the standard SoapClient
  */
@@ -23,11 +23,13 @@ class SoapClient extends \SoapClient
 
     /**
      * @param boolean $enable
+     *
      * @return self provides a fluent interface
      */
     public function setDebugMode($enable)
     {
         $this->debugMode = $enable;
+
         return $this;
     }
 
@@ -46,11 +48,13 @@ class SoapClient extends \SoapClient
     /**
      * @param AdapterInterface|null $xmlDSigAdapter XmlDSig adapter or null for
      *                                              disable it
+     *
      * @return self provides a fluent interface
      */
     public function setXmlDSigAdapter(AdapterInterface $xmlDSigAdapter = null)
     {
         $this->xmlDSigAdapter = $xmlDSigAdapter;
+
         return $this;
     }
 
@@ -62,7 +66,7 @@ class SoapClient extends \SoapClient
         return $this->xmlDSigAdapter;
     }
 
-    function __doRequest($request, $location, $action, $version, $one_way = 0)
+    public function __doRequest($request, $location, $action, $version, $one_way = 0)
     {
         if (!$this->xmlDSigAdapter) {
             return parent::__doRequest($request, $location, $action, $version, $one_way);

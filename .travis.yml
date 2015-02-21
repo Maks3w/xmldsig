@@ -9,3 +9,4 @@ before_script:
 
 script:
    - phpunit -c test/
+   - php -d zend.enable_gc=0 ./vendor/bin/php-cs-fixer fix -v --dry-run;

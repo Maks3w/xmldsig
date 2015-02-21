@@ -6,9 +6,8 @@ use DOMDocument;
 use FR3D\XmlDSig\Adapter\XmlseclibsAdapter;
 use FR3D\XmlDSig\Soap\SoapClient;
 
-
 /**
- * Test suite for SoapClient
+ * Test suite for SoapClient.
  */
 class SoapClientTest extends \PHPUnit_Framework_TestCase
 {

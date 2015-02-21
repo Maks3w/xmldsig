@@ -4,64 +4,66 @@ namespace FR3D\XmlDSig\Adapter;
 
 use DOMDocument;
 use DOMNode;
-use XMLSecEnc;
 use RuntimeException;
-use XMLSecurityKey;
-use XMLSecurityDSig;
 use UnexpectedValueException;
+use XMLSecEnc;
+use XMLSecurityDSig;
+use XMLSecurityKey;
 
 /**
- * XmlDSig adapter based on "xmlseclibs" library
+ * XmlDSig adapter based on "xmlseclibs" library.
  *
  * http://code.google.com/p/xmlseclibs/
  */
 class XmlseclibsAdapter implements AdapterInterface
 {
     /**
-     * Private key
+     * Private key.
      *
      * @var string
      */
     protected $privateKey;
 
     /**
-     * Public key
+     * Public key.
      *
      * @var string
      */
     protected $publicKey;
 
     /**
-     * Signature algorithm URI. By default RSA with SHA1
+     * Signature algorithm URI. By default RSA with SHA1.
      *
      * @var string
      */
     protected $keyAlgorithm = self::RSA_SHA1;
 
     /**
-     * Digest algorithm URI. By default SHA1
+     * Digest algorithm URI. By default SHA1.
      *
      * @var string
+     *
      * @see AdapterInterface::SHA1
      */
     protected $digestAlgorithm = self::SHA1;
 
     /**
-     * Canonical algorithm URI. By default C14N
+     * Canonical algorithm URI. By default C14N.
      *
      * @var string
+     *
      * @see AdapterInterface::XML_C14N
      */
     protected $canonicalMethod = self::XML_C14N;
 
     /**
-     * Transforms list
+     * Transforms list.
      *
      * @var array
+     *
      * @see AdapterInterface::ENVELOPED
      */
     protected $transforms = array();
-
 
     public function setPrivateKey($privateKey, $algorithmType = self::RSA_SHA1)
     {
@@ -186,7 +188,7 @@ class XmlseclibsAdapter implements AdapterInterface
         // Check references (data)
         try {
             $objXMLSecDSig->validateReference();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
 
@@ -194,13 +196,15 @@ class XmlseclibsAdapter implements AdapterInterface
     }
 
     /**
-     * Try to extract the public key from DOM node
+     * Try to extract the public key from DOM node.
      *
      * Sets publicKey and keyAlgorithm properties if success.
      *
      * @see publicKey
      * @see keyAlgorithm
+     *
      * @param DOMNode $dom
+     *
      * @return bool `true` If public key was extracted or `false` if cannot be possible
      */
     protected function setPublicKeyFromNode(DOMNode $dom)
@@ -225,10 +229,12 @@ class XmlseclibsAdapter implements AdapterInterface
     }
 
     /**
-     * Try to extract the public key from private key
+     * Try to extract the public key from private key.
      *
      * @see publicKey
+     *
      * @param string $privateKey
+     *
      * @return bool `true` If public key was extracted or `false` if cannot be possible
      */
     protected function setPublicKeyFromPrivateKey($privateKey)

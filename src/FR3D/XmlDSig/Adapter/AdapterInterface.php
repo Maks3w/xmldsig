@@ -7,7 +7,7 @@ use DOMNode;
 use RuntimeException;
 
 /**
- * Interface for XML Digital Signature adapters
+ * Interface for XML Digital Signature adapters.
  *
  * These methods and URIs follows the "XML Signature Syntax and Processing"
  * recommendation published by W3C.
@@ -17,7 +17,7 @@ use RuntimeException;
 interface AdapterInterface
 {
     /**
-     * Algorithm identifiers
+     * Algorithm identifiers.
      *
      * @see http://www.w3.org/TR/xmldsig-core/#sec-AlgID
      */
@@ -38,26 +38,29 @@ interface AdapterInterface
     const ENVELOPED = 'http://www.w3.org/2000/09/xmldsig#enveloped-signature';
 
     /**
-     * Set the private key for data sign
+     * Set the private key for data sign.
      *
      * @param string $privateKey    Key in PEM format
      * @param string $algorithmType Key digest algorithm. By default RSA with SHA1
+     *
      * @return AdapterInterface Provides a fluent interface
+     *
      * @see AdapterInterface::DSA_SHA1
      * @see AdapterInterface::RSA_SHA1
      */
     public function setPrivateKey($privateKey, $algorithmType = self::RSA_SHA1);
 
     /**
-     * Set the public key
+     * Set the public key.
      *
      * @param string $publicKey Key in PEM format
+     *
      * @return AdapterInterface Provides a fluent interface
      */
     public function setPublicKey($publicKey);
 
     /**
-     * Returns the public key from various sources
+     * Returns the public key from various sources.
      *
      * Try to get the public key from the following sources (index means priority):
      *
@@ -66,58 +69,69 @@ interface AdapterInterface
      *  3) From private key set by setPrivateKey
      *
      * @param null|DOMNode $dom DOM node where to search a publicKey
+     *
      * @return string|null Public key in PEM format
      */
     public function getPublicKey(DOMNode $dom = null);
 
     /**
-     * Public/Private key signature algorithm
+     * Public/Private key signature algorithm.
      *
      * @return string|null Algorithm URI
      */
     public function getKeyAlgorithm();
 
     /**
-     * Set the digest algorithm
+     * Set the digest algorithm.
      *
      * @param string $algorithmType Algorithm URI. By default SHA1
+     *
      * @return AdapterInterface Provides a fluent interface
+     *
      * @see AdapterInterface::SHA1
      */
     public function setDigestAlgorithm($algorithmType = self::SHA1);
 
     /**
-     * Canonicalization method
+     * Canonicalization method.
      *
      * @param string $methodType Algorithm URI. By default C14N
+     *
      * @return AdapterInterface Provides a fluent interface
+     *
      * @see AdapterInterface::XML_C14N
      */
     public function setCanonicalMethod($methodType = self::XML_C14N);
 
     /**
-     * Add transform
+     * Add transform.
      *
      * @param string $transformType Transform URI
+     *
      * @return AdapterInterface Provides a fluent interface
+     *
      * @see AdapterInterface::ENVELOPED
      */
     public function addTransform($transformType);
 
     /**
-     * Add the "signature" element to the DOM Document
+     * Add the "signature" element to the DOM Document.
      *
      * @param DOMDocument $data Data to sign
+     *
      * @return void
+     *
      * @throws RuntimeException If is not possible do the signature
      */
     public function sign(DOMDocument $data);
 
     /**
-     * Validate the signature of the DOM Document
+     * Validate the signature of the DOM Document.
      *
      * @param DOMDocument $data Data to verify
+     *
      * @return boolean TRUE if is correct or FALSE otherwise
+     *
      * @throws RuntimeException If is not possible do the verification
      */
     public function verify(DOMDocument $data);

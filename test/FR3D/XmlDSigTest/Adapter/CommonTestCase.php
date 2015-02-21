@@ -7,7 +7,7 @@ use DOMXPath;
 use FR3D\XmlDSig\Adapter\AdapterInterface;
 
 /**
- * Common test for all XmlDSig adapters
+ * Common test for all XmlDSig adapters.
  */
 class CommonTestCase extends \PHPUnit_Framework_TestCase
 {
