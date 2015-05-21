@@ -13,9 +13,9 @@ based in PHP Language.
 
 ## Documentation
 
-  - See `src/FR3D/XmlDSig/Adapter/AdapterInterface.php` for sign methods.
+  - See `src/Adapter/AdapterInterface.php` for sign methods.
 
-  - Use `src/FR3D/XmlDSig/Soap/SoapClient.php` for send signed SOAP Requests.
+  - Use `src/Soap/SoapClient.php` for send signed SOAP Requests.
 
 ## License
 

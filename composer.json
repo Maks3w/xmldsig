@@ -24,12 +24,12 @@
         "phpunit/phpunit": ">= 3.7"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "FR3D\\XmlDSig\\": ["src"]
         }
     },
     "autoload-dev": {
-        "psr-0": {
+        "psr-4": {
             "FR3D\\XmlDSigTest\\": ["test"]
         }
     }

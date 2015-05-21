@@ -15,6 +15,7 @@ return Symfony\CS\Config\Config::create()
             'ordered_use',
             'strict',
             'strict_param',
+            '-psr0', // Bugged XmlDSigTest to lowercase change
         )
     )
     ->finder(
