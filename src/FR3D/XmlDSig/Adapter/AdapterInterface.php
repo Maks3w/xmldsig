@@ -130,7 +130,7 @@ interface AdapterInterface
      *
      * @param DOMDocument $data Data to verify
      *
-     * @return boolean TRUE if is correct or FALSE otherwise
+     * @return bool TRUE if is correct or FALSE otherwise
      *
      * @throws RuntimeException If is not possible do the verification
      */

@@ -67,7 +67,7 @@ class XmlseclibsAdapter implements AdapterInterface
 
     public function setPrivateKey($privateKey, $algorithmType = self::RSA_SHA1)
     {
-        $this->privateKey   = $privateKey;
+        $this->privateKey = $privateKey;
         $this->keyAlgorithm = $algorithmType;
 
         return $this;
@@ -148,9 +148,9 @@ class XmlseclibsAdapter implements AdapterInterface
 
     public function verify(DOMDocument $data)
     {
-        $objKey        = null;
+        $objKey = null;
         $objXMLSecDSig = new XMLSecurityDSig();
-        $objDSig       = $objXMLSecDSig->locateSignature($data);
+        $objDSig = $objXMLSecDSig->locateSignature($data);
         if (!$objDSig) {
             throw new UnexpectedValueException('Signature DOM element not found.');
         }
@@ -166,7 +166,7 @@ class XmlseclibsAdapter implements AdapterInterface
             }
 
             XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
-            $this->publicKey    = $objKey->getX509Certificate();
+            $this->publicKey = $objKey->getX509Certificate();
             $this->keyAlgorithm = $objKey->getAlgorith();
         }
 
@@ -211,7 +211,7 @@ class XmlseclibsAdapter implements AdapterInterface
     {
         // try to get the public key from the certificate
         $objXMLSecDSig = new XMLSecurityDSig();
-        $objDSig       = $objXMLSecDSig->locateSignature($dom);
+        $objDSig = $objXMLSecDSig->locateSignature($dom);
         if (!$objDSig) {
             return false;
         }
@@ -222,7 +222,7 @@ class XmlseclibsAdapter implements AdapterInterface
         }
 
         XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
-        $this->publicKey    = $objKey->getX509Certificate();
+        $this->publicKey = $objKey->getX509Certificate();
         $this->keyAlgorithm = $objKey->getAlgorith();
 
         return true;

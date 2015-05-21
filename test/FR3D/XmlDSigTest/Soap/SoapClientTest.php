@@ -38,7 +38,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $this->client = new SoapClient(
             __DIR__ . '/_files/HelloWorld.wsdl',
             array(
-                'trace'      => true,
+                'trace' => true,
                 'exceptions' => false,
             )
         );

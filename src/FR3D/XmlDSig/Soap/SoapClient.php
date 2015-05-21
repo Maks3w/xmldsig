@@ -12,7 +12,7 @@ use FR3D\XmlDSig\Adapter\AdapterInterface;
  */
 class SoapClient extends \SoapClient
 {
-    /** @var boolean */
+    /** @var bool */
     protected $debugMode = false;
 
     /** @var string */
@@ -22,7 +22,7 @@ class SoapClient extends \SoapClient
     protected $xmlDSigAdapter;
 
     /**
-     * @param boolean $enable
+     * @param bool $enable
      *
      * @return self provides a fluent interface
      */
