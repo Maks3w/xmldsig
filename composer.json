@@ -17,30 +17,12 @@
     ],
     "homepage": "https://github.com/Maks3w/",
     "require": {
-        "cdatazone/xmlseclibs": "*"
+        "robrichards/xmlseclibs": "^1.3"
     },
     "require-dev": {
-        "cdatazone/xmlseclibs": "dev-master",
         "fabpot/php-cs-fixer": "1.*",
         "phpunit/phpunit": ">= 3.7"
     },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "cdatazone/xmlseclibs",
-                "version": "dev-master",
-                "source": {
-                    "type": "svn",
-                    "url": "http://xmlseclibs.googlecode.com/svn/",
-                    "reference": "trunk/"
-                },
-                "autoload": {
-                    "classmap": ["xmlseclibs.php"]
-                }
-            }
-        }
-    ],
     "autoload": {
         "psr-0": {
             "FR3D\\XmlDSig\\": ["src"]
