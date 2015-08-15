@@ -47,7 +47,7 @@ class SoapClientTest extends TestCase
         $this->client->setXmlDSigAdapter(null);
         try {
             $this->client->__call('sayHello', []);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             // Ignore
         }
 
@@ -65,7 +65,7 @@ class SoapClientTest extends TestCase
 ';
         try {
             $this->client->__call('sayHello', []);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             // Ignore
         }
 
