@@ -8,6 +8,8 @@ use FR3D\XmlDSig\Soap\SoapClient;
 
 /**
  * Test suite for SoapClient.
+ *
+ * @requires extension soap
  */
 class SoapClientTest extends \PHPUnit_Framework_TestCase
 {

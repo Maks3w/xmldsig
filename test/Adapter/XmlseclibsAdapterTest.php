@@ -6,6 +6,8 @@ use FR3D\XmlDSig\Adapter\XmlseclibsAdapter;
 
 /**
  * Test suite for Xmlseclibs adapter.
+ *
+ * @requires extension openssl
  */
 class XmlseclibsAdapterTest extends CommonTestCase
 {
