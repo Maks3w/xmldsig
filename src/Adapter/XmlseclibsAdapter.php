@@ -4,11 +4,11 @@ namespace FR3D\XmlDSig\Adapter;
 
 use DOMDocument;
 use DOMNode;
+use RobRichards\XMLSecLibs\XMLSecEnc;
+use RobRichards\XMLSecLibs\XMLSecurityDSig;
+use RobRichards\XMLSecLibs\XMLSecurityKey;
 use RuntimeException;
 use UnexpectedValueException;
-use XMLSecEnc;
-use XMLSecurityDSig;
-use XMLSecurityKey;
 
 /**
  * XmlDSig adapter based on "xmlseclibs" library.
