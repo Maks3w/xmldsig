@@ -1,120 +1,180 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
-                  xmlns:hw="urn:hello-world:1.0"
-                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                  targetNamespace="urn:hello-world:1.0">
-
+        xmlns:hw="urn:hello-world:1.0"
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="urn:hello-world:1.0">
     <wsdl:types>
-        <schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+        <schema xmlns="http://www.w3.org/2001/XMLSchema"
+                elementFormDefault="qualified"
                 targetNamespace="urn:hello-world:1.0">
             <element name="sayHello">
                 <complexType>
                     <sequence>
-                        <element name="name" type="xsd:string"/>
-                        <element ref="dsig:Signature" minOccurs="0"/>
+                        <element name="name"
+                                type="xsd:string"/>
+                        <element ref="dsig:Signature"
+                                minOccurs="0"/>
                     </sequence>
                 </complexType>
             </element>
             <element name="sayHelloResponse">
                 <complexType>
                     <sequence>
-                        <element name="sayHelloReturn" type="xsd:string"/>
-                        <element ref="dsig:Signature" minOccurs="0"/>
+                        <element name="sayHelloReturn"
+                                type="xsd:string"/>
+                        <element ref="dsig:Signature"
+                                minOccurs="0"/>
                     </sequence>
                 </complexType>
             </element>
         </schema>
-        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.w3.org/2000/09/xmldsig#" version="0.1" elementFormDefault="qualified">
+        <schema xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+                targetNamespace="http://www.w3.org/2000/09/xmldsig#"
+                version="0.1"
+                elementFormDefault="qualified">
             <simpleType name="CryptoBinary">
                 <restriction base="base64Binary"></restriction>
             </simpleType>
             <!--  Start Signature  -->
-            <element name="Signature" type="ds:SignatureType"/>
+            <element name="Signature"
+                    type="ds:SignatureType"/>
             <complexType name="SignatureType">
                 <sequence>
                     <element ref="ds:SignedInfo"/>
                     <element ref="ds:SignatureValue"/>
-                    <element ref="ds:KeyInfo" minOccurs="0"/>
-                    <element ref="ds:Object" minOccurs="0" maxOccurs="unbounded"/>
+                    <element ref="ds:KeyInfo"
+                            minOccurs="0"/>
+                    <element ref="ds:Object"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
                 </sequence>
-                <attribute name="Id" type="ID" use="optional"/>
+                <attribute name="Id"
+                        type="ID"
+                        use="optional"/>
             </complexType>
-            <element name="SignatureValue" type="ds:SignatureValueType"/>
+            <element name="SignatureValue"
+                    type="ds:SignatureValueType"/>
             <complexType name="SignatureValueType">
                 <simpleContent>
                     <extension base="base64Binary">
-                        <attribute name="Id" type="ID" use="optional"/>
+                        <attribute name="Id"
+                                type="ID"
+                                use="optional"/>
                     </extension>
                 </simpleContent>
             </complexType>
             <!--  Start SignedInfo  -->
-            <element name="SignedInfo" type="ds:SignedInfoType"/>
+            <element name="SignedInfo"
+                    type="ds:SignedInfoType"/>
             <complexType name="SignedInfoType">
                 <sequence>
                     <element ref="ds:CanonicalizationMethod"/>
                     <element ref="ds:SignatureMethod"/>
-                    <element ref="ds:Reference" maxOccurs="unbounded"/>
+                    <element ref="ds:Reference"
+                            maxOccurs="unbounded"/>
                 </sequence>
-                <attribute name="Id" type="ID" use="optional"/>
+                <attribute name="Id"
+                        type="ID"
+                        use="optional"/>
             </complexType>
-            <element name="CanonicalizationMethod" type="ds:CanonicalizationMethodType"/>
-            <complexType name="CanonicalizationMethodType" mixed="true">
+            <element name="CanonicalizationMethod"
+                    type="ds:CanonicalizationMethodType"/>
+            <complexType name="CanonicalizationMethodType"
+                    mixed="true">
                 <sequence>
-                    <any namespace="##any" minOccurs="0" maxOccurs="unbounded"/>
+                    <any namespace="##any"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
                     <!--  (0,unbounded) elements from (1,1) namespace  -->
                 </sequence>
-                <attribute name="Algorithm" type="anyURI" use="required"/>
+                <attribute name="Algorithm"
+                        type="anyURI"
+                        use="required"/>
             </complexType>
-            <element name="SignatureMethod" type="ds:SignatureMethodType"/>
-            <complexType name="SignatureMethodType" mixed="true">
+            <element name="SignatureMethod"
+                    type="ds:SignatureMethodType"/>
+            <complexType name="SignatureMethodType"
+                    mixed="true">
                 <sequence>
-                    <element name="HMACOutputLength" minOccurs="0" type="ds:HMACOutputLengthType"/>
-                    <any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+                    <element name="HMACOutputLength"
+                            minOccurs="0"
+                            type="ds:HMACOutputLengthType"/>
+                    <any namespace="##other"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
                     <!--
                      (0,unbounded) elements from (1,1) external namespace 
                     -->
                 </sequence>
-                <attribute name="Algorithm" type="anyURI" use="required"/>
+                <attribute name="Algorithm"
+                        type="anyURI"
+                        use="required"/>
             </complexType>
             <!--  Start Reference  -->
-            <element name="Reference" type="ds:ReferenceType"/>
+            <element name="Reference"
+                    type="ds:ReferenceType"/>
             <complexType name="ReferenceType">
                 <sequence>
-                    <element ref="ds:Transforms" minOccurs="0"/>
+                    <element ref="ds:Transforms"
+                            minOccurs="0"/>
                     <element ref="ds:DigestMethod"/>
                     <element ref="ds:DigestValue"/>
                 </sequence>
-                <attribute name="Id" type="ID" use="optional"/>
-                <attribute name="URI" type="anyURI" use="optional"/>
-                <attribute name="Type" type="anyURI" use="optional"/>
+                <attribute name="Id"
+                        type="ID"
+                        use="optional"/>
+                <attribute name="URI"
+                        type="anyURI"
+                        use="optional"/>
+                <attribute name="Type"
+                        type="anyURI"
+                        use="optional"/>
             </complexType>
-            <element name="Transforms" type="ds:TransformsType"/>
+            <element name="Transforms"
+                    type="ds:TransformsType"/>
             <complexType name="TransformsType">
                 <sequence>
-                    <element ref="ds:Transform" maxOccurs="unbounded"/>
+                    <element ref="ds:Transform"
+                            maxOccurs="unbounded"/>
                 </sequence>
             </complexType>
-            <element name="Transform" type="ds:TransformType"/>
-            <complexType name="TransformType" mixed="true">
-                <choice minOccurs="0" maxOccurs="unbounded">
-                    <any namespace="##other" processContents="lax"/>
+            <element name="Transform"
+                    type="ds:TransformType"/>
+            <complexType name="TransformType"
+                    mixed="true">
+                <choice minOccurs="0"
+                        maxOccurs="unbounded">
+                    <any namespace="##other"
+                            processContents="lax"/>
                     <!--  (1,1) elements from (0,unbounded) namespaces  -->
-                    <element name="XPath" type="string"/>
+                    <element name="XPath"
+                            type="string"/>
                 </choice>
-                <attribute name="Algorithm" type="anyURI" use="required"/>
+                <attribute name="Algorithm"
+                        type="anyURI"
+                        use="required"/>
             </complexType>
             <!--  End Reference  -->
-            <element name="DigestMethod" type="ds:DigestMethodType"/>
-            <complexType name="DigestMethodType" mixed="true">
+            <element name="DigestMethod"
+                    type="ds:DigestMethodType"/>
+            <complexType name="DigestMethodType"
+                    mixed="true">
                 <sequence>
-                    <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                    <any namespace="##other"
+                            processContents="lax"
+                            minOccurs="0"
+                            maxOccurs="unbounded"/>
                 </sequence>
-                <attribute name="Algorithm" type="anyURI" use="required"/>
+                <attribute name="Algorithm"
+                        type="anyURI"
+                        use="required"/>
             </complexType>
             <!--  MODIFIED SAFELAYER  -->
-            <element name="DigestValue" type="ds:DigestValueType"/>
+            <element name="DigestValue"
+                    type="ds:DigestValueType"/>
             <complexType name="DigestValueType">
                 <simpleContent>
                     <extension base="base64Binary"/>
@@ -123,8 +183,10 @@
             <!--  END MODIFIED SAFELAYER  -->
             <!--  End SignedInfo  -->
             <!--  Start KeyInfo  -->
-            <element name="KeyInfo" type="ds:KeyInfoType"/>
-            <complexType name="KeyInfoType" mixed="true">
+            <element name="KeyInfo"
+                    type="ds:KeyInfoType"/>
+            <complexType name="KeyInfoType"
+                    mixed="true">
                 <choice maxOccurs="unbounded">
                     <element ref="ds:KeyName"/>
                     <element ref="ds:KeyValue"/>
@@ -133,109 +195,171 @@
                     <element ref="ds:PGPData"/>
                     <element ref="ds:SPKIData"/>
                     <element ref="ds:MgmtData"/>
-                    <any processContents="lax" namespace="##other"/>
+                    <any processContents="lax"
+                            namespace="##other"/>
                     <!--  (1,1) elements from (0,unbounded) namespaces  -->
                 </choice>
-                <attribute name="Id" type="ID" use="optional"/>
+                <attribute name="Id"
+                        type="ID"
+                        use="optional"/>
             </complexType>
-            <element name="KeyName" type="string"/>
-            <element name="MgmtData" type="string"/>
-            <element name="KeyValue" type="ds:KeyValueType"/>
-            <complexType name="KeyValueType" mixed="true">
+            <element name="KeyName"
+                    type="string"/>
+            <element name="MgmtData"
+                    type="string"/>
+            <element name="KeyValue"
+                    type="ds:KeyValueType"/>
+            <complexType name="KeyValueType"
+                    mixed="true">
                 <choice>
                     <element ref="ds:DSAKeyValue"/>
                     <element ref="ds:RSAKeyValue"/>
-                    <any namespace="##other" processContents="lax"/>
+                    <any namespace="##other"
+                            processContents="lax"/>
                 </choice>
             </complexType>
-            <element name="RetrievalMethod" type="ds:RetrievalMethodType"/>
+            <element name="RetrievalMethod"
+                    type="ds:RetrievalMethodType"/>
             <complexType name="RetrievalMethodType">
                 <sequence>
-                    <element ref="ds:Transforms" minOccurs="0"/>
+                    <element ref="ds:Transforms"
+                            minOccurs="0"/>
                 </sequence>
-                <attribute name="URI" type="anyURI"/>
-                <attribute name="Type" type="anyURI" use="optional"/>
+                <attribute name="URI"
+                        type="anyURI"/>
+                <attribute name="Type"
+                        type="anyURI"
+                        use="optional"/>
             </complexType>
             <!--  Start X509Data  -->
-            <element name="X509Data" type="ds:X509DataType"/>
+            <element name="X509Data"
+                    type="ds:X509DataType"/>
             <complexType name="X509DataType">
                 <sequence maxOccurs="unbounded">
                     <choice>
-                        <element name="X509IssuerSerial" type="ds:X509IssuerSerialType"/>
-                        <element name="X509SKI" type="base64Binary"/>
-                        <element name="X509SubjectName" type="string"/>
-                        <element name="X509Certificate" type="base64Binary"/>
-                        <element name="X509CRL" type="base64Binary"/>
-                        <any namespace="##other" processContents="lax"/>
+                        <element name="X509IssuerSerial"
+                                type="ds:X509IssuerSerialType"/>
+                        <element name="X509SKI"
+                                type="base64Binary"/>
+                        <element name="X509SubjectName"
+                                type="string"/>
+                        <element name="X509Certificate"
+                                type="base64Binary"/>
+                        <element name="X509CRL"
+                                type="base64Binary"/>
+                        <any namespace="##other"
+                                processContents="lax"/>
                     </choice>
                 </sequence>
             </complexType>
             <complexType name="X509IssuerSerialType">
                 <sequence>
-                    <element name="X509IssuerName" type="string"/>
-                    <element name="X509SerialNumber" type="integer"/>
+                    <element name="X509IssuerName"
+                            type="string"/>
+                    <element name="X509SerialNumber"
+                            type="integer"/>
                 </sequence>
             </complexType>
             <!--  End X509Data  -->
             <!--  Begin PGPData  -->
-            <element name="PGPData" type="ds:PGPDataType"/>
+            <element name="PGPData"
+                    type="ds:PGPDataType"/>
             <complexType name="PGPDataType">
                 <choice>
                     <sequence>
-                        <element name="PGPKeyID" type="base64Binary"/>
-                        <element name="PGPKeyPacket" type="base64Binary" minOccurs="0"/>
-                        <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                        <element name="PGPKeyID"
+                                type="base64Binary"/>
+                        <element name="PGPKeyPacket"
+                                type="base64Binary"
+                                minOccurs="0"/>
+                        <any namespace="##other"
+                                processContents="lax"
+                                minOccurs="0"
+                                maxOccurs="unbounded"/>
                     </sequence>
                     <sequence>
-                        <element name="PGPKeyPacket" type="base64Binary"/>
-                        <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                        <element name="PGPKeyPacket"
+                                type="base64Binary"/>
+                        <any namespace="##other"
+                                processContents="lax"
+                                minOccurs="0"
+                                maxOccurs="unbounded"/>
                     </sequence>
                 </choice>
             </complexType>
             <!--  End PGPData  -->
             <!--  Begin SPKIData  -->
-            <element name="SPKIData" type="ds:SPKIDataType"/>
+            <element name="SPKIData"
+                    type="ds:SPKIDataType"/>
             <complexType name="SPKIDataType">
                 <sequence maxOccurs="unbounded">
-                    <element name="SPKISexp" type="base64Binary"/>
-                    <any namespace="##other" processContents="lax" minOccurs="0"/>
+                    <element name="SPKISexp"
+                            type="base64Binary"/>
+                    <any namespace="##other"
+                            processContents="lax"
+                            minOccurs="0"/>
                 </sequence>
             </complexType>
             <!--  End SPKIData  -->
             <!--  End KeyInfo  -->
             <!--  Start Object (Manifest, SignatureProperty)  -->
-            <element name="Object" type="ds:ObjectType"/>
-            <complexType name="ObjectType" mixed="true">
-                <sequence minOccurs="0" maxOccurs="unbounded">
-                    <any namespace="##any" processContents="lax"/>
+            <element name="Object"
+                    type="ds:ObjectType"/>
+            <complexType name="ObjectType"
+                    mixed="true">
+                <sequence minOccurs="0"
+                        maxOccurs="unbounded">
+                    <any namespace="##any"
+                            processContents="lax"/>
                 </sequence>
-                <attribute name="Id" type="ID" use="optional"/>
-                <attribute name="MimeType" type="string" use="optional"/>
+                <attribute name="Id"
+                        type="ID"
+                        use="optional"/>
+                <attribute name="MimeType"
+                        type="string"
+                        use="optional"/>
                 <!--  add a grep facet  -->
-                <attribute name="Encoding" type="anyURI" use="optional"/>
+                <attribute name="Encoding"
+                        type="anyURI"
+                        use="optional"/>
             </complexType>
-            <element name="Manifest" type="ds:ManifestType"/>
+            <element name="Manifest"
+                    type="ds:ManifestType"/>
             <complexType name="ManifestType">
                 <sequence>
-                    <element ref="ds:Reference" maxOccurs="unbounded"/>
+                    <element ref="ds:Reference"
+                            maxOccurs="unbounded"/>
                 </sequence>
-                <attribute name="Id" type="ID" use="optional"/>
+                <attribute name="Id"
+                        type="ID"
+                        use="optional"/>
             </complexType>
-            <element name="SignatureProperties" type="ds:SignaturePropertiesType"/>
+            <element name="SignatureProperties"
+                    type="ds:SignaturePropertiesType"/>
             <complexType name="SignaturePropertiesType">
                 <sequence>
-                    <element ref="ds:SignatureProperty" maxOccurs="unbounded"/>
+                    <element ref="ds:SignatureProperty"
+                            maxOccurs="unbounded"/>
                 </sequence>
-                <attribute name="Id" type="ID" use="optional"/>
+                <attribute name="Id"
+                        type="ID"
+                        use="optional"/>
             </complexType>
-            <element name="SignatureProperty" type="ds:SignaturePropertyType"/>
-            <complexType name="SignaturePropertyType" mixed="true">
+            <element name="SignatureProperty"
+                    type="ds:SignaturePropertyType"/>
+            <complexType name="SignaturePropertyType"
+                    mixed="true">
                 <choice maxOccurs="unbounded">
-                    <any namespace="##other" processContents="lax"/>
+                    <any namespace="##other"
+                            processContents="lax"/>
                     <!--  (1,1) elements from (1,unbounded) namespaces  -->
                 </choice>
-                <attribute name="Target" type="anyURI" use="required"/>
-                <attribute name="Id" type="ID" use="optional"/>
+                <attribute name="Target"
+                        type="anyURI"
+                        use="required"/>
+                <attribute name="Id"
+                        type="ID"
+                        use="optional"/>
             </complexType>
             <!--  End Object (Manifest, SignatureProperty)  -->
             <!--  Start Algorithm Parameters  -->
@@ -243,72 +367,83 @@
                 <restriction base="integer"/>
             </simpleType>
             <!--  Start KeyValue Element-types  -->
-            <element name="DSAKeyValue" type="ds:DSAKeyValueType"/>
+            <element name="DSAKeyValue"
+                    type="ds:DSAKeyValueType"/>
             <complexType name="DSAKeyValueType">
                 <sequence>
                     <sequence minOccurs="0">
-                        <element name="P" type="ds:CryptoBinary"/>
-                        <element name="Q" type="ds:CryptoBinary"/>
+                        <element name="P"
+                                type="ds:CryptoBinary"/>
+                        <element name="Q"
+                                type="ds:CryptoBinary"/>
                     </sequence>
-                    <element name="G" type="ds:CryptoBinary" minOccurs="0"/>
-                    <element name="Y" type="ds:CryptoBinary"/>
-                    <element name="J" type="ds:CryptoBinary" minOccurs="0"/>
+                    <element name="G"
+                            type="ds:CryptoBinary"
+                            minOccurs="0"/>
+                    <element name="Y"
+                            type="ds:CryptoBinary"/>
+                    <element name="J"
+                            type="ds:CryptoBinary"
+                            minOccurs="0"/>
                     <sequence minOccurs="0">
-                        <element name="Seed" type="ds:CryptoBinary"/>
-                        <element name="PgenCounter" type="ds:CryptoBinary"/>
+                        <element name="Seed"
+                                type="ds:CryptoBinary"/>
+                        <element name="PgenCounter"
+                                type="ds:CryptoBinary"/>
                     </sequence>
                 </sequence>
             </complexType>
-            <element name="RSAKeyValue" type="ds:RSAKeyValueType"/>
+            <element name="RSAKeyValue"
+                    type="ds:RSAKeyValueType"/>
             <complexType name="RSAKeyValueType">
                 <sequence>
-                    <element name="Modulus" type="ds:CryptoBinary"/>
-                    <element name="Exponent" type="ds:CryptoBinary"/>
+                    <element name="Modulus"
+                            type="ds:CryptoBinary"/>
+                    <element name="Exponent"
+                            type="ds:CryptoBinary"/>
                 </sequence>
             </complexType>
             <!--  End KeyValue Element-types  -->
             <!--  End Signature  -->
         </schema>
     </wsdl:types>
-
     <wsdl:message name="sayHelloResponse">
-        <wsdl:part element="hw:sayHelloResponse" name="parameters">
+        <wsdl:part element="hw:sayHelloResponse"
+                name="parameters">
         </wsdl:part>
     </wsdl:message>
-
     <wsdl:message name="sayHelloRequest">
-        <wsdl:part element="hw:sayHello" name="parameters">
+        <wsdl:part element="hw:sayHello"
+                name="parameters">
         </wsdl:part>
     </wsdl:message>
-
     <wsdl:portType name="HelloWorld">
         <wsdl:operation name="sayHello">
-            <wsdl:input message="hw:sayHelloRequest" name="sayHelloRequest">
+            <wsdl:input message="hw:sayHelloRequest"
+                    name="sayHelloRequest">
             </wsdl:input>
-
-            <wsdl:output message="hw:sayHelloResponse" name="sayHelloResponse">
+            <wsdl:output message="hw:sayHelloResponse"
+                    name="sayHelloResponse">
             </wsdl:output>
         </wsdl:operation>
     </wsdl:portType>
-
-    <wsdl:binding name="HelloWorldSoapBinding" type="hw:HelloWorld">
-        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-
+    <wsdl:binding name="HelloWorldSoapBinding"
+            type="hw:HelloWorld">
+        <wsdlsoap:binding style="document"
+                transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="sayHello">
             <wsdlsoap:operation soapAction=""/>
-
             <wsdl:input name="sayHelloRequest">
                 <wsdlsoap:body use="literal"/>
             </wsdl:input>
-
             <wsdl:output name="sayHelloResponse">
                 <wsdlsoap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-
     <wsdl:service name="HelloWorldService">
-        <wsdl:port binding="hw:HelloWorldSoapBinding" name="HelloWorld">
+        <wsdl:port binding="hw:HelloWorldSoapBinding"
+                name="HelloWorld">
             <wsdlsoap:address location="http://localhost:8080/WebService/services/HelloWorld"/>
         </wsdl:port>
     </wsdl:service>
