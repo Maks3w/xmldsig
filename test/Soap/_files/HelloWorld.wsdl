@@ -444,7 +444,7 @@
     <wsdl:service name="HelloWorldService">
         <wsdl:port binding="hw:HelloWorldSoapBinding"
                 name="HelloWorld">
-            <wsdlsoap:address location="http://localhost:8080/WebService/services/HelloWorld"/>
+            <wsdlsoap:address location="http://example.com"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
