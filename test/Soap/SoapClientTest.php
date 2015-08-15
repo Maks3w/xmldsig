@@ -5,13 +5,14 @@ namespace FR3D\XmlDSigTest\Soap;
 use DOMDocument;
 use FR3D\XmlDSig\Adapter\XmlseclibsAdapter;
 use FR3D\XmlDSig\Soap\SoapClient;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Test suite for SoapClient.
  *
  * @requires extension soap
  */
-class SoapClientTest extends \PHPUnit_Framework_TestCase
+class SoapClientTest extends TestCase
 {
     /** @var SoapClient */
     protected $client;
@@ -19,21 +20,11 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
     /** @var XmlseclibsAdapter */
     protected $xmlDSigAdapter;
 
-    /**
-     * @var string Path to private key
-     */
-    protected $privateKey = '../_files/privkey.pem';
-
-    /**
-     * @var string Path to public key
-     */
-    protected $publicKey = '../_files/pubkey.pem';
-
     protected function setUp()
     {
         $this->xmlDSigAdapter = new XmlseclibsAdapter();
-        $this->xmlDSigAdapter->setPrivateKey(file_get_contents(__DIR__ . '/' . $this->privateKey));
-        $this->xmlDSigAdapter->setPublicKey(file_get_contents(__DIR__ . '/' . $this->publicKey));
+        $this->xmlDSigAdapter->setPrivateKey(file_get_contents(__DIR__ . '/../_files/privkey.pem'));
+        $this->xmlDSigAdapter->setPublicKey(file_get_contents(__DIR__ . '/../_files/pubkey.pem'));
         $this->xmlDSigAdapter->addTransform(XmlseclibsAdapter::ENVELOPED);
 
         $this->client = new SoapClient(
@@ -55,7 +46,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
 ';
         $this->client->setXmlDSigAdapter(null);
         $this->client->__call('sayHello', []);
-        $this->assertEquals($expected, $this->client->__getLastRequest());
+        TestCase::assertEquals($expected, $this->client->__getLastRequest());
     }
 
     public function testSignSoapMessage()
@@ -70,7 +61,7 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $this->client->__call('sayHello', []);
 
         $lastRequest = $this->client->__getLastRequest();
-        $this->assertEquals($expected, $lastRequest);
+        TestCase::assertEquals($expected, $lastRequest);
 
         $dom = new DOMDocument();
         $dom->loadXML($lastRequest);
@@ -84,6 +75,6 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
         $xmlDSigAdapter = $this->client->getXmlDSigAdapter();
         $newData = new DOMDocument();
         $newData->loadXML($firstElement->C14N());
-        $this->assertTrue($xmlDSigAdapter->verify($newData));
+        TestCase::assertTrue($xmlDSigAdapter->verify($newData));
     }
 }
