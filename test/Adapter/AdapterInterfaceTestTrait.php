@@ -5,77 +5,69 @@ namespace FR3D\XmlDSigTest\Adapter;
 use DOMDocument;
 use DOMXPath;
 use FR3D\XmlDSig\Adapter\AdapterInterface;
+use PHPUnit_Framework_Assert as Assert;
+use RuntimeException;
 
 /**
  * Common test for all XmlDSig adapters.
  */
-class CommonTestCase extends \PHPUnit_Framework_TestCase
+trait AdapterInterfaceTestTrait
 {
-    /**
-     * @var AdapterInterface
-     */
-    protected $adapter;
-
-    /**
-     * @var string Path to private key
-     */
-    protected $privateKey = '../_files/privkey.pem';
-
-    /**
-     * @var string Path to public key
-     */
-    protected $publicKey = '../_files/pubkey.pem';
-
     public function testGetPublicKeyFromSetter()
     {
+        $adapter = $this->getAdapter();
         $publicKey = $this->getPublicKey();
-        $this->assertNotEquals($publicKey, $this->adapter->getPublicKey());
+        Assert::assertNotEquals($publicKey, $adapter->getPublicKey());
 
-        $this->adapter->setPublicKey($publicKey);
-        $this->assertEquals($publicKey, $this->adapter->getPublicKey());
+        $adapter->setPublicKey($publicKey);
+        Assert::assertEquals($publicKey, $adapter->getPublicKey());
     }
 
     public function testGetPublicKeyFromPrivateKey()
     {
+        $adapter = $this->getAdapter();
         $publicKey = $this->getPublicKey();
-        $this->assertNotEquals($publicKey, $this->adapter->getPublicKey());
+        Assert::assertNotEquals($publicKey, $adapter->getPublicKey());
 
-        $this->adapter->setPrivateKey($this->getPrivateKey());
-        $this->assertEquals($publicKey, $this->adapter->getPublicKey());
+        $adapter->setPrivateKey($this->getPrivateKey());
+        Assert::assertEquals($publicKey, $adapter->getPublicKey());
     }
 
     public function testGetPublicKeyFromNode()
     {
+        $adapter = $this->getAdapter();
         $publicKey = $this->getPublicKey();
-        $this->assertNotEquals($publicKey, $this->adapter->getPublicKey());
+        Assert::assertNotEquals($publicKey, $adapter->getPublicKey());
 
         $data = new DOMDocument();
         $data->load(__DIR__ . '/_files/basic-doc-signed.xml');
-        $this->assertEquals($publicKey, $this->adapter->getPublicKey($data));
+        Assert::assertEquals($publicKey, $adapter->getPublicKey($data));
     }
 
     public function testSignWithoutPrivateKeys()
     {
-        $this->setExpectedException(
-            'RuntimeException',
-            'Missing private key. Use setPrivateKey to set one.'
-        );
-        $this->adapter->sign(new DOMDocument());
+        $adapter = $this->getAdapter();
+        try {
+            $adapter->sign(new DOMDocument());
+        } catch (RuntimeException $e) {
+            Assert::assertEquals('Missing private key. Use setPrivateKey to set one.', $e->getMessage());
+        }
     }
 
     public function testSign()
     {
+        $adapter = $this->getAdapter();
         $data = new DOMDocument();
         $data->load(__DIR__ . '/_files/basic-doc.xml');
 
-        $this->adapter
+        $adapter
             ->setPrivateKey($this->getPrivateKey())
             ->setPublicKey($this->getPublicKey())
             ->addTransform(AdapterInterface::ENVELOPED)
             ->setCanonicalMethod('http://www.w3.org/2001/10/xml-exc-c14n#')
             ->sign($data);
 
-        $this->assertXmlStringEqualsXmlFile(
+        Assert::assertXmlStringEqualsXmlFile(
             __DIR__ . '/_files/basic-doc-signed.xml',
             $data->saveXML()
         );
@@ -83,14 +75,16 @@ class CommonTestCase extends \PHPUnit_Framework_TestCase
 
     public function testVerify()
     {
+        $adapter = $this->getAdapter();
         $data = new DOMDocument();
         $data->load(__DIR__ . '/_files/basic-doc-signed.xml');
 
-        $this->assertTrue($this->adapter->verify($data));
+        Assert::assertTrue($adapter->verify($data));
     }
 
     public function testManipulatedData()
     {
+        $adapter = $this->getAdapter();
         $data = new DOMDocument();
         $data->load(__DIR__ . '/_files/basic-doc-signed.xml');
 
@@ -98,11 +92,12 @@ class CommonTestCase extends \PHPUnit_Framework_TestCase
         $xpath->registerNamespace('s', 'urn:envelope');
         $xpath->query('//s:Value')->item(0)->nodeValue = 'wrong test';
 
-        $this->assertFalse($this->adapter->verify($data));
+        Assert::assertFalse($adapter->verify($data));
     }
 
     public function testManipulatedSignature()
     {
+        $adapter = $this->getAdapter();
         $data = new DOMDocument();
         $data->load(__DIR__ . '/_files/basic-doc-signed.xml');
 
@@ -110,16 +105,27 @@ class CommonTestCase extends \PHPUnit_Framework_TestCase
         $xpath->registerNamespace('s', 'urn:envelope');
         $xpath->query('//s:Value')->item(0)->nodeValue = 'wrong test';
 
-        $this->assertFalse($this->adapter->verify($data));
+        Assert::assertFalse($adapter->verify($data));
     }
 
+    /**
+     * @return AdapterInterface
+     */
+    abstract protected function getAdapter();
+
+    /**
+     * @return string
+     */
     protected function getPrivateKey()
     {
-        return file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $this->privateKey);
+        return file_get_contents(__DIR__ . '/../_files/privkey.pem');
     }
 
+    /**
+     * @return string
+     */
     protected function getPublicKey()
     {
-        return file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . $this->publicKey);
+        return file_get_contents(__DIR__ . '/../_files/pubkey.pem');
     }
 }

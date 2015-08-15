@@ -3,21 +3,24 @@
 namespace FR3D\XmlDSigTest\Adapter;
 
 use FR3D\XmlDSig\Adapter\XmlseclibsAdapter;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * Test suite for Xmlseclibs adapter.
  *
  * @requires extension openssl
  */
-class XmlseclibsAdapterTest extends CommonTestCase
+class XmlseclibsAdapterTest extends TestCase
 {
-    protected function setUp()
+    use AdapterInterfaceTestTrait;
+
+    protected function getAdapter()
     {
-        $this->adapter = new XmlseclibsAdapter();
+        return new XmlseclibsAdapter();
     }
 
     public function testGetPublicKeyFromPrivateKey()
     {
-        $this->markTestIncomplete('PHP OpenSSL extension does not extract public key from private key');
+        TestCase::markTestIncomplete('PHP OpenSSL extension does not extract public key from private key');
     }
 }
