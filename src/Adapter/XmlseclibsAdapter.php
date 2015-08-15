@@ -69,15 +69,11 @@ class XmlseclibsAdapter implements AdapterInterface
     {
         $this->privateKey = $privateKey;
         $this->keyAlgorithm = $algorithmType;
-
-        return $this;
     }
 
     public function setPublicKey($publicKey)
     {
         $this->publicKey = $publicKey;
-
-        return $this;
     }
 
     public function getPublicKey(DOMNode $dom = null)
@@ -97,22 +93,16 @@ class XmlseclibsAdapter implements AdapterInterface
     public function setDigestAlgorithm($algorithmType = self::SHA1)
     {
         $this->digestAlgorithm = $algorithmType;
-
-        return $this;
     }
 
     public function setCanonicalMethod($methodType = self::XML_C14N)
     {
         $this->canonicalMethod = $methodType;
-
-        return $this;
     }
 
     public function addTransform($transformType)
     {
         $this->transforms[] = $transformType;
-
-        return $this;
     }
 
     public function sign(DOMDocument $data)

@@ -43,7 +43,7 @@ interface AdapterInterface
      * @param string $privateKey    Key in PEM format
      * @param string $algorithmType Key digest algorithm. By default RSA with SHA1
      *
-     * @return AdapterInterface Provides a fluent interface
+     * @return void
      *
      * @see AdapterInterface::DSA_SHA1
      * @see AdapterInterface::RSA_SHA1
@@ -55,7 +55,7 @@ interface AdapterInterface
      *
      * @param string $publicKey Key in PEM format
      *
-     * @return AdapterInterface Provides a fluent interface
+     * @return void
      */
     public function setPublicKey($publicKey);
 
@@ -86,7 +86,7 @@ interface AdapterInterface
      *
      * @param string $algorithmType Algorithm URI. By default SHA1
      *
-     * @return AdapterInterface Provides a fluent interface
+     * @return void
      *
      * @see AdapterInterface::SHA1
      */
@@ -97,7 +97,7 @@ interface AdapterInterface
      *
      * @param string $methodType Algorithm URI. By default C14N
      *
-     * @return AdapterInterface Provides a fluent interface
+     * @return void
      *
      * @see AdapterInterface::XML_C14N
      */
@@ -108,7 +108,7 @@ interface AdapterInterface
      *
      * @param string $transformType Transform URI
      *
-     * @return AdapterInterface Provides a fluent interface
+     * @return void
      *
      * @see AdapterInterface::ENVELOPED
      */

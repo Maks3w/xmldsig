@@ -32,10 +32,9 @@ class SoapClientTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->xmlDSigAdapter = new XmlseclibsAdapter();
-        $this->xmlDSigAdapter
-            ->setPrivateKey(file_get_contents(__DIR__ . '/' . $this->privateKey))
-            ->setPublicKey(file_get_contents(__DIR__ . '/' . $this->publicKey))
-            ->addTransform(XmlseclibsAdapter::ENVELOPED);
+        $this->xmlDSigAdapter->setPrivateKey(file_get_contents(__DIR__ . '/' . $this->privateKey));
+        $this->xmlDSigAdapter->setPublicKey(file_get_contents(__DIR__ . '/' . $this->publicKey));
+        $this->xmlDSigAdapter->addTransform(XmlseclibsAdapter::ENVELOPED);
 
         $this->client = new SoapClient(
             __DIR__ . '/_files/HelloWorld.wsdl',

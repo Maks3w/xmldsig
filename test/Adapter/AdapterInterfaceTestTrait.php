@@ -50,12 +50,11 @@ trait AdapterInterfaceTestTrait
         $data = new DOMDocument();
         $data->load(__DIR__ . '/_files/basic-doc.xml');
 
-        $adapter
-            ->setPrivateKey($this->getPrivateKey())
-            ->setPublicKey($this->getPublicKey())
-            ->addTransform(AdapterInterface::ENVELOPED)
-            ->setCanonicalMethod('http://www.w3.org/2001/10/xml-exc-c14n#')
-            ->sign($data);
+        $adapter->setPrivateKey($this->getPrivateKey());
+        $adapter->setPublicKey($this->getPublicKey());
+        $adapter->addTransform(AdapterInterface::ENVELOPED);
+        $adapter->setCanonicalMethod('http://www.w3.org/2001/10/xml-exc-c14n#');
+        $adapter->sign($data);
 
         Assert::assertXmlStringEqualsXmlFile(
             __DIR__ . '/_files/basic-doc-signed.xml',
