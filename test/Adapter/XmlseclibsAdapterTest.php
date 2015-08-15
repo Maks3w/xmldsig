@@ -18,9 +18,4 @@ class XmlseclibsAdapterTest extends TestCase
     {
         return new XmlseclibsAdapter();
     }
-
-    public function testGetPublicKeyFromPrivateKey()
-    {
-        TestCase::markTestIncomplete('PHP OpenSSL extension does not extract public key from private key');
-    }
 }

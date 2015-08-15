@@ -86,10 +86,6 @@ class XmlseclibsAdapter implements AdapterInterface
             $this->setPublicKeyFromNode($dom);
         }
 
-        if (!$this->publicKey && $this->privateKey) {
-            $this->setPublicKeyFromPrivateKey($this->privateKey);
-        }
-
         return $this->publicKey;
     }
 
@@ -226,22 +222,5 @@ class XmlseclibsAdapter implements AdapterInterface
         $this->keyAlgorithm = $objKey->getAlgorith();
 
         return true;
-    }
-
-    /**
-     * Try to extract the public key from private key.
-     *
-     * @see publicKey
-     *
-     * @param string $privateKey
-     *
-     * @return bool `true` If public key was extracted or `false` if cannot be possible
-     */
-    protected function setPublicKeyFromPrivateKey($privateKey)
-    {
-        return openssl_pkey_export(
-            openssl_pkey_get_public($privateKey),
-            $this->publicKey
-        );
     }
 }

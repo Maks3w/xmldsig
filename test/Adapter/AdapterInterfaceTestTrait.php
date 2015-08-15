@@ -23,16 +23,6 @@ trait AdapterInterfaceTestTrait
         Assert::assertEquals($publicKey, $adapter->getPublicKey());
     }
 
-    public function testGetPublicKeyFromPrivateKey()
-    {
-        $adapter = $this->getAdapter();
-        $publicKey = $this->getPublicKey();
-        Assert::assertNotEquals($publicKey, $adapter->getPublicKey());
-
-        $adapter->setPrivateKey($this->getPrivateKey());
-        Assert::assertEquals($publicKey, $adapter->getPublicKey());
-    }
-
     public function testGetPublicKeyFromNode()
     {
         $adapter = $this->getAdapter();
