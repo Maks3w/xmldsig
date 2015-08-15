@@ -73,7 +73,7 @@ class SoapClient extends \SoapClient
         }
 
         // Some WS providers use NS1 for his own use and conflicts with the signature calc
-        $request = str_replace(array(':ns1', 'ns1:'), array(':wns1', 'wns1:'), $request);
+        $request = str_replace([':ns1', 'ns1:'], [':wns1', 'wns1:'], $request);
 
         $dom = new DOMDocument();
         $dom->loadXML($request);

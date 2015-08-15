@@ -63,7 +63,7 @@ class XmlseclibsAdapter implements AdapterInterface
      *
      * @see AdapterInterface::ENVELOPED
      */
-    protected $transforms = array();
+    protected $transforms = [];
 
     public function setPrivateKey($privateKey, $algorithmType = self::RSA_SHA1)
     {
@@ -129,15 +129,15 @@ class XmlseclibsAdapter implements AdapterInterface
 
         $objKey = new XMLSecurityKey(
             $this->keyAlgorithm,
-            array(
+            [
                  'type' => 'private',
-            )
+            ]
         );
         $objKey->loadKey($this->privateKey);
 
         $objXMLSecDSig = new XMLSecurityDSig();
         $objXMLSecDSig->setCanonicalMethod($this->canonicalMethod);
-        $objXMLSecDSig->addReference($data, $this->digestAlgorithm, $this->transforms, array('force_uri' => true));
+        $objXMLSecDSig->addReference($data, $this->digestAlgorithm, $this->transforms, ['force_uri' => true]);
         $objXMLSecDSig->sign($objKey, $data->documentElement);
 
         /* Add associated public key */
@@ -173,9 +173,9 @@ class XmlseclibsAdapter implements AdapterInterface
         if (!$objKey) {
             $objKey = new XMLSecurityKey(
                 $this->keyAlgorithm,
-                array(
+                [
                      'type' => 'public',
-                )
+                ]
             );
             $objKey->loadKey($this->getPublicKey());
         }
