@@ -65,6 +65,7 @@ class XmlseclibsAdapter implements AdapterInterface
      */
     protected $transforms = [];
 
+
     public function setPrivateKey($privateKey, $algorithmType = self::RSA_SHA1)
     {
         $this->privateKey = $privateKey;
@@ -121,7 +122,7 @@ class XmlseclibsAdapter implements AdapterInterface
         );
         $objKey->loadKey($this->privateKey);
 
-        $objXMLSecDSig = new XMLSecurityDSig();
+        $objXMLSecDSig = $this->createXmlSecurityDSig();
         $objXMLSecDSig->setCanonicalMethod($this->canonicalMethod);
         $objXMLSecDSig->addReference($data, $this->digestAlgorithm, $this->transforms, ['force_uri' => true]);
         $objXMLSecDSig->sign($objKey, $data->documentElement);
@@ -135,7 +136,7 @@ class XmlseclibsAdapter implements AdapterInterface
     public function verify(DOMDocument $data)
     {
         $objKey = null;
-        $objXMLSecDSig = new XMLSecurityDSig();
+        $objXMLSecDSig = $this->createXmlSecurityDSig();
         $objDSig = $objXMLSecDSig->locateSignature($data);
         if (!$objDSig) {
             throw new UnexpectedValueException('Signature DOM element not found.');
@@ -182,6 +183,16 @@ class XmlseclibsAdapter implements AdapterInterface
     }
 
     /**
+     * Create the XMLSecurityDSig class.
+     *
+     * @return XMLSecurityDSig
+     */
+    protected function createXmlSecurityDSig() 
+    {
+        return new XMLSecurityDSig();
+    }
+    
+    /**
      * Try to extract the public key from DOM node.
      *
      * Sets publicKey and keyAlgorithm properties if success.
@@ -196,7 +207,7 @@ class XmlseclibsAdapter implements AdapterInterface
     protected function setPublicKeyFromNode(DOMNode $dom)
     {
         // try to get the public key from the certificate
-        $objXMLSecDSig = new XMLSecurityDSig();
+        $objXMLSecDSig = $this->createXmlSecurityDSig();
         $objDSig = $objXMLSecDSig->locateSignature($dom);
         if (!$objDSig) {
             return false;
