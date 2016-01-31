@@ -65,7 +65,6 @@ class XmlseclibsAdapter implements AdapterInterface
      */
     protected $transforms = [];
 
-
     public function setPrivateKey($privateKey, $algorithmType = self::RSA_SHA1)
     {
         $this->privateKey = $privateKey;
