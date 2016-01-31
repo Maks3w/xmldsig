@@ -187,25 +187,13 @@ class XmlseclibsAdapter implements AdapterInterface
      *
      * @return XMLSecurityDSig
      */
-<<<<<<< HEAD
-<<<<<<< HEAD
     
-=======
->>>>>>> 4a05477a81aeb84e02430b7429c2ca2b3e36f89b
-=======
->>>>>>> 4a05477a81aeb84e02430b7429c2ca2b3e36f89b
     protected function createXmlSecurityDSig() 
     {
         return new XMLSecurityDSig();
     }
     
-<<<<<<< HEAD
-<<<<<<< HEAD
     
-=======
->>>>>>> 4a05477a81aeb84e02430b7429c2ca2b3e36f89b
-=======
->>>>>>> 4a05477a81aeb84e02430b7429c2ca2b3e36f89b
     /**
      * Try to extract the public key from DOM node.
      *
