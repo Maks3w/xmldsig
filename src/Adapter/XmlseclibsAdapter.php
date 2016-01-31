@@ -65,34 +65,14 @@ class XmlseclibsAdapter implements AdapterInterface
      */
     protected $transforms = [];
 
-    private $xmlSecurityDSig;
-
-    public function __construct() {
-
-        $this->createXmlSecurityDSig();
-    }
-
     /**
      * Create the XLMSecurityDSign class
-     * 
-     * @param array $options
      *
      * @return new XMLSecurityDSig()
      */
-    public function createXmlSecurityDSig($options = array()) {
+    protected function createXmlSecurityDSig($options = array()) {
 
-        $this->xmlSecurityDSig = new XMLSecurityDSig();
-        //create it with prefix if needed
-        if(in_array('prefix', array_keys($options))){
-            $this->xmlSecurityDSig = new XMLSecurityDSig($options['prefix']);
-            unset($options['prefix']);
-        }
-        //add remaining options properties to it
-        foreach ($options as $key => $value) {
-            $this->xmlSecurityDSig->$key = $value;
-        }
-
-        return $this->xmlSecurityDSig;
+        return new XMLSecurityDSig();
     }
 
     public function setPrivateKey($privateKey, $algorithmType = self::RSA_SHA1)
@@ -151,7 +131,7 @@ class XmlseclibsAdapter implements AdapterInterface
         );
         $objKey->loadKey($this->privateKey);
 
-        $objXMLSecDSig = $this->xmlSecurityDSig;
+        $objXMLSecDSig = $this->createXmlSecurityDSig();
         $objXMLSecDSig->setCanonicalMethod($this->canonicalMethod);
         $objXMLSecDSig->addReference($data, $this->digestAlgorithm, $this->transforms, ['force_uri' => true]);
         $objXMLSecDSig->sign($objKey, $data->documentElement);
@@ -165,7 +145,7 @@ class XmlseclibsAdapter implements AdapterInterface
     public function verify(DOMDocument $data)
     {
         $objKey = null;
-        $objXMLSecDSig = $this->xmlSecurityDSig;
+        $objXMLSecDSig = $this->createXmlSecurityDSig();
         $objDSig = $objXMLSecDSig->locateSignature($data);
         if (!$objDSig) {
             throw new UnexpectedValueException('Signature DOM element not found.');
@@ -226,7 +206,7 @@ class XmlseclibsAdapter implements AdapterInterface
     protected function setPublicKeyFromNode(DOMNode $dom)
     {
         // try to get the public key from the certificate
-        $objXMLSecDSig = $this->xmlSecurityDSig;
+        $objXMLSecDSig = $this->createXmlSecurityDSig();
         $objDSig = $objXMLSecDSig->locateSignature($dom);
         if (!$objDSig) {
             return false;
