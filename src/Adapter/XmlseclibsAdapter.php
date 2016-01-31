@@ -66,11 +66,11 @@ class XmlseclibsAdapter implements AdapterInterface
     protected $transforms = [];
 
     /**
-     * Create the XLMSecurityDSign class
+     * Create the XLMSecurityDSig class
      *
-     * @return new XMLSecurityDSig()
+     * @return XMLSecurityDSig
      */
-    protected function createXmlSecurityDSig($options = array()) {
+    protected function createXmlSecurityDSig() {
 
         return new XMLSecurityDSig();
     }
