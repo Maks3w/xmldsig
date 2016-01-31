@@ -186,8 +186,8 @@ class XmlseclibsAdapter implements AdapterInterface
      * Create the XMLSecurityDSig class.
      *
      * @return XMLSecurityDSig
-     */    
-    protected function createXmlSecurityDSig() 
+     */
+    protected function createXmlSecurityDSig()
     {
         return new XMLSecurityDSig();
     }
