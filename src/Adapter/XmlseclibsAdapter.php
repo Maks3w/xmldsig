@@ -186,14 +186,12 @@ class XmlseclibsAdapter implements AdapterInterface
      * Create the XMLSecurityDSig class.
      *
      * @return XMLSecurityDSig
-     */
-    
+     */    
     protected function createXmlSecurityDSig() 
     {
         return new XMLSecurityDSig();
     }
-    
-    
+
     /**
      * Try to extract the public key from DOM node.
      *
