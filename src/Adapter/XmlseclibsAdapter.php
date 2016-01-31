@@ -65,15 +65,6 @@ class XmlseclibsAdapter implements AdapterInterface
      */
     protected $transforms = [];
 
-    /**
-     * Create the XLMSecurityDSig class
-     *
-     * @return XMLSecurityDSig
-     */
-    protected function createXmlSecurityDSig() {
-
-        return new XMLSecurityDSig();
-    }
 
     public function setPrivateKey($privateKey, $algorithmType = self::RSA_SHA1)
     {
@@ -191,6 +182,16 @@ class XmlseclibsAdapter implements AdapterInterface
         return true;
     }
 
+    /**
+     * Create the XMLSecurityDSig class.
+     *
+     * @return XMLSecurityDSig
+     */
+    protected function createXmlSecurityDSig() 
+    {
+        return new XMLSecurityDSig();
+    }
+    
     /**
      * Try to extract the public key from DOM node.
      *
