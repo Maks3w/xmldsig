@@ -1,7 +1,5 @@
 # FR3D XmlDSig
 
-[![Build Status](https://secure.travis-ci.org/Maks3w/xmldsig.png?branch=master)](http://travis-ci.org/Maks3w/xmldsig)
-
 This repository offers an easy interface to manipulate [XML Digital Signatures](http://www.w3.org/TR/xmldsig-core/)
 based in PHP Language.
 
