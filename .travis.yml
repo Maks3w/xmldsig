@@ -28,7 +28,7 @@ install:
   - composer info -i
 
 script:
-  - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then vendor/bin/phpunit --coverage-clover clover.xml tests; fi
+  - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then vendor/bin/phpunit --coverage-clover clover.xml test; fi
   - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then vendor/bin/phpunit test; fi
   - if [[ $EXECUTE_CS_CHECK == 'true' ]]; then vendor/bin/php-cs-fixer fix -v --dry-run; fi
 
