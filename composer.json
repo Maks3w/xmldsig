@@ -1,7 +1,6 @@
 {
     "name": "fr3d/xmldsig",
     "description": "Tool for easy management of XML Signatures (http://www.w3.org/TR/xmldsig-core/)",
-    "license": "BSD-2-Clause",
     "keywords": [
         "xml",
         "xmldsig",
@@ -9,28 +8,27 @@
         "security",
         "soap"
     ],
-    "authors": [
-        {
-            "name": "Maks3w",
-            "email": "github.maks3w@virtualplanets.net"
-        }
-    ],
+    "license": "BSD-2-Clause",
     "homepage": "https://github.com/Maks3w/xmldsig/",
     "require": {
-        "robrichards/xmlseclibs": "^2.0"
+        "php": ">= 7.0",
+        "ext-dom": "*",
+        "ext-soap": "*",
+        "robrichards/xmlseclibs": "^3.0"
     },
     "require-dev": {
-        "fabpot/php-cs-fixer": "1.10.*",
-        "phpunit/phpunit": "^4.0"
+        "friendsofphp/php-cs-fixer": "^2.0",
+        "phpunit/phpunit": "^6.0",
+        "sensiolabs/security-checker": "^5.0"
     },
     "autoload": {
         "psr-4": {
-            "FR3D\\XmlDSig\\": ["src"]
+            "FR3D\\XmlDSig\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "FR3D\\XmlDSigTest\\": ["test"]
+            "FR3D\\XmlDSig\\": "test"
         }
     }
 }

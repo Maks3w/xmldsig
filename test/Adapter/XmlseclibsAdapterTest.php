@@ -1,9 +1,10 @@
 <?php
 
-namespace FR3D\XmlDSigTest\Adapter;
+declare(strict_types=1);
 
-use FR3D\XmlDSig\Adapter\XmlseclibsAdapter;
-use PHPUnit_Framework_TestCase as TestCase;
+namespace FR3D\XmlDSig\Adapter;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test suite for Xmlseclibs adapter.

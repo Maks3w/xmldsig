@@ -1,11 +1,12 @@
 <?php
 
-namespace FR3D\XmlDSigTest\Soap;
+declare(strict_types=1);
+
+namespace FR3D\XmlDSig\Soap;
 
 use DOMDocument;
 use FR3D\XmlDSig\Adapter\XmlseclibsAdapter;
-use FR3D\XmlDSig\Soap\SoapClient;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test suite for SoapClient.

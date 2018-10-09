@@ -1,11 +1,12 @@
 <?php
 
-namespace FR3D\XmlDSigTest\Adapter;
+declare(strict_types=1);
+
+namespace FR3D\XmlDSig\Adapter;
 
 use DOMDocument;
 use DOMXPath;
-use FR3D\XmlDSig\Adapter\AdapterInterface;
-use PHPUnit_Framework_Assert as Assert;
+use PHPUnit\Framework\Assert;
 use RuntimeException;
 
 /**

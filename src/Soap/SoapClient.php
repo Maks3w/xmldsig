@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FR3D\XmlDSig\Soap;
 
 use DOMDocument;
